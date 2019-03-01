@@ -27,7 +27,7 @@ A_nx+b_n
   \right] 
 \end{aligned}=Ax+b
 $$
-(b)计算$\frac{\partial f(x)}{\partial x_k}$
+(b)计算$\frac{\partial f(x)}{\partial x_k}​$
 $$
 \frac{\partial f(x)}{\partial x_k} =\frac{\partial g(h(x))}{\partial x_k}
 =\frac{\partial g(h(x))}{\partial h(x)}\frac{\partial h(x)}{\partial x_k}=g^{'}(h(x))\frac{\partial h(x)}{\partial x_k}
@@ -46,13 +46,13 @@ g^{'}(h(x))\frac{\partial h(x)}{\partial x_n}
 $$
 (c)接着(a)计算$\nabla^2 f(x)$，我们计算$\frac{\partial^2 f(x)}{\partial x_l \partial x_k}$
 $$
-\frac{\partial^2 f(x)}{\partial x_l \partial x_k} = \frac{\partial ( \sum_{i=1}^n x_iA_{ik} +b_k)}{\partial x_l} =A_{kl}
+\frac{\partial^2 f(x)}{\partial x_l \partial x_k} = \frac{\partial ( \sum_{i=1}^n x_iA_{ik} +b_k)}{\partial x_l} =A_{lk}
 $$
 所以
 $$
-\nabla^2 f(x) = A^T=A
+\nabla^2 f(x)=A
 $$
-(d)记$h(x) = a^Tx$，所以$f(x)=g(h(x))$，所以利用(b)计算$\nabla f(x)$，
+(d)记$h(x) = a^Tx$，所以$f(x)=g(h(x))$，所以利用(b)计算$\nabla f(x)​$，
 $$
 \frac{\partial h(x)}{\partial  x_k}=a_k\\
 \nabla h(x) = a\\
@@ -74,13 +74,14 @@ $$
 $$
 
 
+
 #### 2.Positive definite matrices
 
 (a)任取$x \in \mathbb R^n$，那么
 $$
 x^TAx=x^T zz^Tx=(z^T x) ^T (z^Tx) \ge 0
 $$
-(b)考虑$A$的零空间，任取$x\in N(A)$，那么
+(b)考虑$A$的零空间，任取$x\in N(A)​$，那么
 $$
 Ax=zz^Tx=0\\
 两边左乘x^T可得\\
@@ -93,7 +94,7 @@ $$
 z^Tx=0\\
 zz^Tx=0
 $$
-从而$x\in N(A)$，因此
+从而$x\in N(A)​$，因此
 $$
 N(A) = N(z^T)
 $$
@@ -107,7 +108,7 @@ $$
 $$
 x^TBA B^Tx =(B^Tx)^T A( B^Tx)
 $$
-记$z= B^Tx$，结合$A$的半正定性可得
+记$z= B^Tx$，结合$A​$的半正定性可得
 $$
 x^TBA B^Tx =z^T Az \ge 0
 $$
@@ -135,7 +136,7 @@ $$
 $$
 A u^{(i)} =\lambda_i u^{(i)}
 $$
-(b)取$x_i$，使得
+(c)取$x_i$，使得
 $$
 x_i =U [\underbrace{0,...0}_{i-1个0},1,0,...,0] ^T
 $$

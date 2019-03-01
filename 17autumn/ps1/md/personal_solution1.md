@@ -5,7 +5,7 @@ $$
 J(\theta) =-\frac 1 m \sum_{i=1}^m \log (h_{\theta}(y^{(i)}x^{(i)}))\\
 y(i) ∈\{−1, 1\}, h_θ(x) = g(θ^T x) ,g(z) = 1/(1 + e^{−z})
 $$
-注意$g^{'}(z) = g(z)(1-g(z))$，利用这点来求$\frac{\partial h_θ(x) }{\partial \theta_k}$
+注意$g^{'}(z) = g(z)(1-g(z))$，利用这点来求$\frac{\partial h_θ(x) }{\partial \theta_k}​$
 $$
 \begin{aligned}
 \frac{\partial h_θ(x) }{\partial \theta_k}
@@ -15,7 +15,7 @@ $$
 &=h_θ(x)(1-h_θ(x))x_k
 \end{aligned}
 $$
-利用$\frac{\partial h_θ(x) }{\partial \theta_k}$来求$\frac{\partial J(\theta)}{\partial \theta_k}$
+利用$\frac{\partial h_θ(x) }{\partial \theta_k}$来求$\frac{\partial J(\theta)}{\partial \theta_k}​$
 $$
 \begin{aligned}
 \frac{\partial J(\theta)}{\partial \theta_k}
@@ -36,17 +36,17 @@ $$
 $$
 接着作以下记号
 $$
-x_k=[x_1^{(k)},...,x_n^{(k)}]^T \in R^n\\
+x_k=[x_1^{(k)},...,x_n^{(k)}]^T \in \mathbb R^n\\
   X=  \left[
  \begin{matrix}
  x_1^T\\
   ...\\
 x_m^T 
   \end{matrix}
-  \right] \in R^{m\times n} \\
-  \Lambda= \text {diag} \{h_θ(y^{(1}x^{(1)})(1-h_θ(y^{(1)}x^{(1)}),...,h_θ(y^{(m)}x^{(m)})(1-h_θ(y^{(m)}x^{(m)})\} \in R^{m\times m}
+  \right] \in \mathbb R^{m\times n} \\
+  \Lambda= \text {diag} \{h_θ(y^{(1}x^{(1)})(1-h_θ(y^{(1)}x^{(1)}),...,h_θ(y^{(m)}x^{(m)})(1-h_θ(y^{(m)}x^{(m)})\} \in\mathbb R^{m\times m}
 $$
-所以Hessian矩阵$H​$可以表达为如下形式
+所以Hessian矩阵$H$可以表达为如下形式
 $$
 H= X^T \Lambda X
 $$
@@ -58,14 +58,14 @@ S = \left[
 ... \\
   (1-h_θ(y^{(m)}x^{(m)}))y^{(m)}
   \end{matrix}
-  \right] \in R^m\\
+  \right] \in\mathbb R^m\\
 \nabla J(\theta) = -\frac 1  m X^T S
 $$
-现在任取$z\in R^n$，记$t=X^Tz$，那么
+现在任取$z\in \mathbb R^n$，记$t=X^Tz$，那么
 $$
 z^THz = z^TX \Lambda X^Tz =t^T \Lambda  t =\sum_{i=1}^m t_i^2 h_θ(y^{(i)}x^{(i)})(1-h_θ(y^{(i)}x^{(i)})
 $$
-注意$h_θ(y^{(i)}x^{(i)}) \in [0,1]$，所以$h_θ(y^{(i)}x^{(i)})(1-h_θ(y^{(i)}x^{(i)}) \ge 0$，从而
+注意$h_θ(y^{(i)}x^{(i)}) \in [0,1]​$，所以$h_θ(y^{(i)}x^{(i)})(1-h_θ(y^{(i)}x^{(i)}) \ge 0​$，从而
 $$
 z^THz =\sum_{i=1}^m t_i^2 h_θ(y^{(i)}x^{(i)})(1-h_θ(y^{(i)}x^{(i)}) \ge 0
 $$
@@ -101,7 +101,7 @@ def add_intercept(X_):
     return X
 ```
 
-第二步是利用刚刚的公式计算梯度以及$Hessian$矩阵。
+第二步是利用刚刚的公式计算梯度以及Hessian​矩阵。
 
 ```python
 #利用之前所述的公式计算
@@ -203,7 +203,7 @@ theta = logistic_regression(X, Y)
 plot(X, Y, theta)
 ```
 
-![png](output_8_0.png)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_8_0.png?raw=true)
 
 全部代码可以查看my_logistic.py这个文件。
 
@@ -225,9 +225,9 @@ b(y) = \frac 1 {y!},\eta = \log \lambda,T(y)=y,a(\eta) =\lambda =e^{\eta}
 $$
 所以泊松分布为指数族
 
-(b)我们来计算$g(η) = E[T (y); η]$
+(b)我们来计算$g(η) = \mathbb E[T (y); η]$
 $$
-E[T (y); η]= E[y; η] =\lambda =e^{\eta}
+ \mathbb E[T (y); η]= \mathbb E[y; η] =\lambda =e^{\eta}
 $$
 (c)根据GLM的性质可知$\eta = \theta^T x​$，那么$\lambda=e^{\eta} =e^{\theta^T x}​$
 
@@ -240,21 +240,21 @@ l &= \log p(y^{(i)}|x^{(i)}; θ)\\
 &=y^{(i)}\theta^T x^{(i)} -e^{\theta^T x^{(i)}} -\log(y^{(i)}!)
 \end{aligned}
 $$
-关于$\theta_j$求偏导可得
+关于$\theta_j​$求偏导可得
 $$
 \frac{\partial l}{\partial \theta_j} =y^{(i)}x^{(i)}_j -e^{\theta^T x^{(i)}} x_j=(y^{(i)}-e^{\theta^T x^{(i)}} )x_j
 $$
 此处求最大值，用随机梯度上升法，更新规则为
 $$
-\theta_j = \theta_j+ (y^{(i)}-e^{\theta^T x^{(i)}} )x_j= \theta_j - (e^{\theta^T x^{(i)}}-y^{(i)} )x_j
+\theta_j = \theta_j+\alpha (y^{(i)}-e^{\theta^T x^{(i)}} )x_j
 $$
-(d)$T(y)=y$，所以
+(d)$T(y)=y​$，所以
 $$
 p(y; η) = b(y) \exp(η^T T (y) − a(η)) = b(y) \exp(η^T y − a(η))
 $$
 
 $$
-E[T (y); η]= E[y; η]
+ \mathbb E[T (y); η]= \mathbb E[y; η]
 $$
 
 $$
@@ -269,13 +269,15 @@ $$
 $$
 \frac{\partial l}{\partial \theta_j} =y x_j - \frac{\partial  a(η)}{\partial η}\frac{\partial  η}{\partial \theta_j}= (y-\frac{\partial  a(η)}{\partial η})x_j
 $$
-接下来只要证明$\frac{\partial  a(η)}{\partial η}= h(x) =E[y;\eta]$即可，利用$p(y; η) $为概率密度函数
+接下来只要证明$\frac{\partial  a(η)}{\partial η}= h(x) = \mathbb E[y;\eta]$即可，利用$p(y; η) $为概率密度函数
 $$
 \int_{-\infty}^{+\infty} b(y) \exp(η^Ty − a(η)) dy =1\\
 \int_{-\infty}^{+\infty} b(y) \exp(η^Ty ) dy =\exp(a(η)) \\
-两边关于\eta求偏导可得\\
+$$
+两边关于$\eta$求偏导可得
+$$
 \int_{-\infty}^{+\infty}y b(y) \exp(η^T y))dy =\exp(a(η)) \frac{\partial  a(η)}{\partial η}\\
-\frac{\partial  a(η)}{\partial η} =\int_{-\infty}^{+\infty} yb(y) \exp(η^Ty − a(η)) dy =E[y;\eta]
+\frac{\partial  a(η)}{\partial η} =\int_{-\infty}^{+\infty} yb(y) \exp(η^Ty − a(η)) dy =\mathbb E[y;\eta]
 $$
 所以
 $$
@@ -414,23 +416,23 @@ $$
 $$
 关于$\mu_1,\mu_{-1}$求梯度
 $$
-\nabla_{\mu_1} ℓ = −\sum_{i=1}^{m}Σ^{−1}(x^{(i)} − \mu_{y^{(i)}})1 \{y^{(i)} = 1\} =0\\
+\nabla_{\mu_1} ℓ = \sum_{i=1}^{m}Σ^{−1}(x^{(i)} − \mu_{y^{(i)}})1 \{y^{(i)} = 1\} =0\\
 \sum_{i=1}^{m} (x^{(i)} − \mu_1)1 \{y^{(i)} = 1\} =0\\
 \mu_1= \frac{\sum_{i=1}^{m}1\{y^{(i)} = 1\}x^{(i)} }{\sum_{i=1}^{m}1\{y^{(i)} = 1\}} \\
-\nabla_{\mu_{-1}} ℓ = −\sum_{i=1}^{m}Σ^{−1}(x^{(i)} − \mu_{y^{(i)}})1 \{y^{(i)} =- 1\} =0\\
+\nabla_{\mu_{-1}} ℓ = \sum_{i=1}^{m}Σ^{−1}(x^{(i)} − \mu_{y^{(i)}})1 \{y^{(i)} =- 1\} =0\\
 \sum_{i=1}^{m} (x^{(i)} − \mu_{-1})1 \{y^{(i)} = -1\} =0\\
 \mu_{-1}= \frac{\sum_{i=1}^{m}1\{y^{(i)} =- 1\}x^{(i)} }{\sum_{i=1}^{m}1\{y^{(i)} = -1\}}
 $$
-求$\sum$的时候利用一些技巧性，我们不求$\sum$的极大似然估计，而是求$\sum^{-1}$的极大似然估计，然后再求出$\sum$的极大似然估计，利用如下两个式子
+求$\Sigma$的时候利用一些技巧性，我们不求的$\Sigma$极大似然估计，而是求$\Sigma^{-1}$的极大似然估计，然后再求出$\Sigma $的极大似然估计，利用如下两个式子
 $$
 \nabla_A \det|A| = \det|A|(A ^{-1})^T\\
 \nabla_A (x^TAy) = \nabla_A  \text{trace}(x^TAy) =  xy^T
 $$
 那么
 $$
-\nabla_{\sum^{-1}} ℓ = \nabla_{\sum^{-1}} \Big( \frac m 2 \log \Big|{\sum}^{-1} \Big|   \Big) -  \frac 12 \nabla_{\sum^{-1}} \sum_{i=1}^{m} (x^{(i)} − \mu_y^{(i)})^T Σ^{−1}(x^{(i)} − \mu_y^{(i)}) = 0\\
-  \frac m 2 \frac{1}{ \Big|{\sum}^{-1} \Big|}  \Big|{\sum}^{-1} \Big|{\sum} -\frac 1 2  \sum_{i=1}^{m}  (x^{(i)} − \mu_y^{(i)}) (x^{(i)} − \mu_y^{(i)})^T = 0\\
-  \sum = \frac 1  m  \sum_{i=1}^{m}  (x^{(i)} − \mu_y^{(i)}) (x^{(i)} − \mu_y^{(i)})^T
+\nabla_{\Sigma^{-1}} ℓ = \nabla_{\Sigma^{-1}} \Big( \frac m 2 \log \Big|{\Sigma}^{-1} \Big|   \Big) -  \frac 12 \nabla_{\Sigma^{-1}} \sum_{i=1}^{m} (x^{(i)} − \mu_y^{(i)})^T Σ^{−1}(x^{(i)} − \mu_y^{(i)}) = 0\\
+  \frac m 2 \frac{1}{ \Big|{\Sigma}^{-1} \Big|}  \Big|{\Sigma}^{-1} \Big|{\Sigma} -\frac 1 2  \sum_{i=1}^{m}  (x^{(i)} − \mu_y^{(i)}) (x^{(i)} − \mu_y^{(i)})^T = 0\\
+  \Sigma = \frac 1  m  \sum_{i=1}^{m}  (x^{(i)} − \mu_y^{(i)}) (x^{(i)} − \mu_y^{(i)})^T
 $$
 所以结论成立。
 
@@ -438,9 +440,9 @@ $$
 
 #### 4.Linear invariance of optimization algorithms
 
-(a)我们计算$∇_zg(z),∇_z^2g(z)$。
+(a)我们计算$∇_zg(z),∇_z^2g(z)​$。
 
-先计算$∇_zg(z),$
+先计算$∇_zg(z),​$
 $$
 \begin{aligned}
 \frac{\partial g(z)}{\partial z_i} &=\sum_{k=1}^n\frac{\partial f(Az)}{\partial (Az)_k}\frac {\partial (Az)_k}{\partial z_i}\\
@@ -460,9 +462,8 @@ $$
 \frac{\partial^2 g(z)}{\partial z_j \partial z_i} 
 &=\frac{\partial\Big(\sum_{k=1}^n\frac{\partial f(Az)}{\partial x_k}A_{ki}\Big)}{\partial z_j}\\
 &=\sum_{k=1}^n \sum_{l=1}^n\frac{\partial^2 f(Az)}{\partial (Az)_l\partial x_k}  \frac{\partial (Az)_l}{\partial x_j}A_{ki}\\
-&=\sum_{k=1}^n \sum_{l=1}^n\frac{\partial^2 f(Az)}{\partial (Az)_l\partial x_k}  \frac{\partial (Az)_l}{\partial x_j}A_{ki}\\
 &=\sum_{k=1}^n \sum_{l=1}^n\frac{\partial^2 f(Az)}{\partial x_l\partial x_k} A_{lj}A_{ki}
-\end{aligned} 
+\end{aligned}
 $$
 从而
 $$
@@ -485,7 +486,7 @@ z^{(i+1)} &=z^{(i)} -  (\nabla^2_z g(z^{(i)}))^{−1}∇_zg(z)\\
 &=A^{-1} x^{(i+1)}
 \end{aligned}
 $$
-其中倒数第二步是因为$x^{(i)} = Az^{(i)}$，所以$n=i+1$时结论成立，从而牛顿法满足invariant to linear reparameterizations
+其中倒数第二步是因为$x^{(i)} = Az^{(i)}​$，所以$n=i+1​$时结论成立，从而牛顿法满足invariant to linear reparameterizations
 
 (b)对于梯度下降法， 继续利用
 $$
@@ -542,7 +543,7 @@ $$
 $$
 p(y^{(i)}|x^{(i)}; θ) = \frac 1 {\sqrt {2π}σ^{ (i)}} \text{exp}\Big(−\frac{(y^{(i)} −θ^T x^{(i)})^2}{2(σ^{(i)})^2}\Big)^2
 $$
-概率似然函数为
+似然函数为
 $$
 \prod_{i=1}^m \frac 1 {\sqrt {2π}σ^{ (i)}} \text{exp}\Big(−\frac{(y^{(i)} −θ^T x^{(i)})^2}{2(σ^{(i)})^2}\Big)^2
 =\Big(\prod_{i=1}^m \frac 1 {\sqrt {2π}σ^{ (i)}}\Big) \text{exp}\Big(−\sum_{i=1}^m\frac{(y^{(i)} −θ^T x^{(i)})^2}{2(σ^{(i)})^2}\Big)^2
@@ -551,7 +552,7 @@ $$
 $$
 \frac 1 2 \sum_{i=1}^m\frac{(y^{(i)} −θ^T x^{(i)})^2}{(σ^{(i)})^2}
 $$
-记$w^{(i)}=\frac 1 {{(σ^{(i)})^2}}$，这个是式子可以转化为
+记$w^{(i)}=\frac 1 {{(σ^{(i)})^2}}$，这个式子可以转化为
 $$
 \frac 1 2 \sum_{i=1}^m w^{(i)}{(y^{(i)} −θ^T x^{(i)})^2}
 $$
@@ -638,10 +639,10 @@ plot_b(wavelengths, raw_train[0], [lr_est], ['Regression line'], 'ps1q5b1.png')
 
     Part b.i) Theta=[2.5134, -0.0010]
 
-![png](output_17_1.png)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_17_1.png?raw=true)
 
 
-(ii)利用a中的公式$\theta =( X^T WX )^{-1} X^TWy$计算
+(ii)利用a中的公式$\theta =( X^T WX )^{-1} X^TWy​$计算
 
 
 ```python
@@ -670,7 +671,7 @@ plot_b(wavelengths, raw_train[0], [lwr_est_5], ['tau = 5'], 'ps1q5b2.png')
 ```
 
 
-![png](output_21_0.png)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_21_0.png?raw=true)
 
 
 对不同的参数作图。
@@ -689,15 +690,15 @@ plot_b(wavelengths, raw_train[0],
 ```
 
 
-![png](output_23_0.png)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_23_0.png?raw=true)
 
-![png](output_23_1.png)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_23_1.png?raw=true)
 
-![png](output_23_2.png)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_23_2.png?raw=true)
 
-![png](output_23_3.png)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_23_3.png?raw=true)
 
-![png](output_23_4.png)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_23_4.png?raw=true)
 
 (c)
 
@@ -872,8 +873,8 @@ plot_c(left_6, smooth_test[5], wavelengths, 'ps1q5c3_6.png')
 
     Part c.iii) Test error: 2.7100
 
-![png](output_37_1.png)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_37_1.png?raw=true)
 
-![png](output_37_3.png)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_37_3.png?raw=true)
 
 全部代码可以查看my_quasars.py这个文件。
