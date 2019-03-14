@@ -1,4 +1,4 @@
-#### Problem 1
+#### Problem 1 A Simple Neural Network
 
 记第二层的输出为$g^{(i)}$
 
@@ -79,7 +79,7 @@ $$
 
 
 
-#### Problem 2
+#### Problem 2 EM for MAP estimation
 
 对数似然函数为
 $$
@@ -135,7 +135,7 @@ $$
 
 
 
-#### Problem 3
+#### Problem 3 EM application
 
 (a)
 
@@ -400,7 +400,7 @@ $$
 
 
 
-#### Problem 4
+#### Problem 4 KL divergence and Maximum Likelihood
 
 (a)我们知道$f(x)=-\log x​$是凸函数，所以
 $$
@@ -457,7 +457,7 @@ $$
 
 
 
-#### Problem 5
+#### Problem 5 K-means for compression
 
 本题有一个注意点，图片的数据格式为整型，运行聚类前需要将其转换为浮点型，否则会报错。另外，本题使用向量化的方法加快计算速度，介绍如下：
 

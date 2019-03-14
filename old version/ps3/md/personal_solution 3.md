@@ -1,4 +1,4 @@
-#### Problem 1
+#### Problem 1 Uniform convergence and Model Selection
 
 (a)由Hoeffding不等式，我们可得对每个$\hat h_i $，
 $$
@@ -103,7 +103,7 @@ $$
 
 
 
-#### Problem 2
+#### Problem 2 VC Dimension
 
 后面都用$d$表示VC维。
 
@@ -137,7 +137,7 @@ $h(x)=1\{\sin(x+a) >0\}$的VC维是$2$，首先$0, \frac \pi 2$可以被shatter�
 
 
 
-#### Problem 3
+#### Problem 3 $ℓ_1$ regularization for least squares
 
 (a)首先对$J(\theta)​$进行化简：
 $$
@@ -261,7 +261,7 @@ print(theta)
 
 
 
-#### Problem 4
+#### Problem 4 K-Means Clustering
 
 这里使用向量化的方法计算每个点距离聚类中心的距离，提高计算效率，介绍如下
 
@@ -454,7 +454,7 @@ k_means(X, 3, plot=1)
 
 
 
-#### Problem 5
+#### Problem 5 The Generalized EM algorithm
 
 (a)
 $$

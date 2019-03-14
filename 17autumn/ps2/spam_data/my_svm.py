@@ -61,7 +61,7 @@ def svm_train(matrix, category):
         #计算函数间隔
         margin = category[i] * (k[i, :].dot(alpha))
         #grad = M * L * k[:, i] * alpha[i]
-        grad = L / M * k.dot(alpha)
+        grad = L * k.dot(alpha)
         if(margin < 1):
             grad -= category[i] * k[:, i]
         alpha -= grad / ((np.sqrt(j+1)))
