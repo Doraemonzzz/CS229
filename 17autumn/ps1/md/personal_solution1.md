@@ -203,7 +203,7 @@ theta = logistic_regression(X, Y)
 plot(X, Y, theta)
 ```
 
-![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_8_0.png?raw=true)
+![](https://github.com/Doraemonzzz/CS229/blob/master/17autumn/ps1/md/output_8_0.png?raw=true)
 
 全部代码可以查看my_logistic.py这个文件。
 
@@ -223,7 +223,7 @@ $$
 $$
 b(y) = \frac 1 {y!},\eta = \log \lambda,T(y)=y,a(\eta) =\lambda =e^{\eta}
 $$
-所以泊松分布为指数族
+所以泊松分布为指数族。
 
 (b)我们来计算$g(η) = \mathbb E[T (y); η]$
 $$
@@ -430,9 +430,9 @@ $$
 $$
 那么
 $$
-\nabla_{\Sigma^{-1}} ℓ = \nabla_{\Sigma^{-1}} \Big( \frac m 2 \log \Big|{\Sigma}^{-1} \Big|   \Big) -  \frac 12 \nabla_{\Sigma^{-1}} \sum_{i=1}^{m} (x^{(i)} − \mu_y^{(i)})^T Σ^{−1}(x^{(i)} − \mu_y^{(i)}) = 0\\
-  \frac m 2 \frac{1}{ \Big|{\Sigma}^{-1} \Big|}  \Big|{\Sigma}^{-1} \Big|{\Sigma} -\frac 1 2  \sum_{i=1}^{m}  (x^{(i)} − \mu_y^{(i)}) (x^{(i)} − \mu_y^{(i)})^T = 0\\
-  \Sigma = \frac 1  m  \sum_{i=1}^{m}  (x^{(i)} − \mu_y^{(i)}) (x^{(i)} − \mu_y^{(i)})^T
+\nabla_{\Sigma^{-1}} ℓ = \nabla_{\Sigma^{-1}} \Big( \frac m 2 \log \Big|{\Sigma}^{-1} \Big|   \Big) -  \frac 12 \nabla_{\Sigma^{-1}} \sum_{i=1}^{m} (x^{(i)} − \mu_{y^{(i)}})^T Σ^{−1}(x^{(i)} − \mu_{y^{(i)}}) = 0\\
+  \frac m 2 \frac{1}{ \Big|{\Sigma}^{-1} \Big|}  \Big|{\Sigma}^{-1} \Big|{\Sigma} -\frac 1 2  \sum_{i=1}^{m}  (x^{(i)} − \mu_{y^{(i)}}) (x^{(i)} − \mu_{y^{(i)}})^T = 0\\
+  \Sigma = \frac 1  m  \sum_{i=1}^{m}  (x^{(i)} − \mu_{y^{(i)}}) (x^{(i)} − \mu_{y^{(i)}})^T
 $$
 所以结论成立。
 
@@ -639,10 +639,10 @@ plot_b(wavelengths, raw_train[0], [lr_est], ['Regression line'], 'ps1q5b1.png')
 
     Part b.i) Theta=[2.5134, -0.0010]
 
-![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_17_1.png?raw=true)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/17autumn/ps1/md/output_17_1.png?raw=true)
 
 
-(ii)利用a中的公式$\theta =( X^T WX )^{-1} X^TWy​$计算
+(ii)利用a中的公式$\theta =( X^T WX )^{-1} X^TWy$计算
 
 
 ```python
@@ -671,7 +671,7 @@ plot_b(wavelengths, raw_train[0], [lwr_est_5], ['tau = 5'], 'ps1q5b2.png')
 ```
 
 
-![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_21_0.png?raw=true)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/17autumn/ps1/md/output_21_0.png?raw=true)
 
 
 对不同的参数作图。
@@ -690,15 +690,15 @@ plot_b(wavelengths, raw_train[0],
 ```
 
 
-![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_23_0.png?raw=true)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/17autumn/ps1/md/output_23_0.png?raw=true)
 
-![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_23_1.png?raw=true)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/17autumn/ps1/md/output_23_1.png?raw=true)
 
-![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_23_2.png?raw=true)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/17autumn/ps1/md/output_23_2.png?raw=true)
 
-![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_23_3.png?raw=true)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/17autumn/ps1/md/output_23_3.png?raw=true)
 
-![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_23_4.png?raw=true)
+![](https://github.com/Doraemonzzz/CS229/blob/master/17autumn/ps1/md/output_23_4.png?raw=true)
 
 (c)
 
@@ -873,8 +873,9 @@ plot_c(left_6, smooth_test[5], wavelengths, 'ps1q5c3_6.png')
 
     Part c.iii) Test error: 2.7100
 
-![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_37_1.png?raw=true)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/17autumn/ps1/md/output_37_1.png?raw=true)
 
-![png](https://github.com/Doraemonzzz/CS229/blob/master/ps1/md/output_37_3.png?raw=true)
+![png](https://github.com/Doraemonzzz/CS229/blob/master/17autumn/ps1/md/output_37_3.png?raw=true)
 
 全部代码可以查看my_quasars.py这个文件。
+

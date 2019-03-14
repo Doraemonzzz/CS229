@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Nov 30 23:06:24 2018
+Created on Thu Mar 14 16:04:08 2019
 
-@author: Administrator
+@author: qinzhen
 """
 
 import numpy as np
@@ -33,8 +33,15 @@ def svm_train(matrix, category):
     M, N = matrix.shape
     #####################
     #大于0的化为1
-    matrix = 1.0*(matrix>0)
-    #构造k的矩阵
+    matrix = 1.0 * (matrix > 0)
+    '''
+    #构造kernel矩阵
+    d1 = np.sum(matrix ** 2, axis=1).reshape(-1, 1)
+    d2 = d1.T
+    squared = matrix.dot(matrix.T)
+    dist = d1 + d2 - 2 * squared
+    k = np.exp(- dist / (2 * (tau ** 2)))
+    '''
     gram = matrix.dot(matrix.T)
     squared = np.sum(matrix*matrix, axis=1)
     k = np.exp(-(squared.reshape((-1,1)) + squared.reshape((1,-1)) - 2 * gram) / (2 * (tau ** 2)))
@@ -48,24 +55,24 @@ def svm_train(matrix, category):
     #平均值
     alpha_avg = np.zeros(M)
     
-    for j in range(n*M):
-        #随机取一个分量(邮件的序号)
-        i = int(np.random.rand()*M)
-        l1 = category[i]*(k[i,:].dot(alpha))
-        #只改变第i个分量
-        grad = L*k[:,i]*alpha[i]
-        if(l1 < 1):
-            grad -= category[i] * k[:,i]
+    for j in range(n * M):
+        #随机取一个样本
+        i = int(np.random.rand() * M)
+        #计算函数间隔
+        margin = category[i] * (k[i, :].dot(alpha))
+        #grad = M * L * k[:, i] * alpha[i]
+        grad = L / M * k.dot(alpha)
+        if(margin < 1):
+            grad -= category[i] * k[:, i]
         alpha -= grad / ((np.sqrt(j+1)))
         alpha_avg += alpha
     
-    alpha_avg /= (n*M)
+    alpha_avg /= (n * M)
     
     state['alpha'] = alpha
     state['alpha_avg'] = alpha_avg
     state['Xtrain'] = matrix
-    state['Sqtrain'] = squared    
-    
+    state['Sqtrain'] = squared
     
     ####################
     return state

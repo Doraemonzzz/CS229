@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Nov 30 22:18:11 2018
+Created on Thu Mar 14 15:58:26 2019
 
-@author: Administrator
+@author: qinzhen
 """
 
 import numpy as np
@@ -58,10 +58,15 @@ def nb_train(matrix, category):
     
     for i in range(N):
         #找到第i个token
+        #垃圾邮件中第i个token出现的数量
         s1 = matrix[category==1][:, i]
+        #拉普拉斯平滑
         u1 = (s1.sum() + 1) / (n1 + N)
+        #非垃圾邮件中第i个token出现的数量
         s0 = matrix[category==0][:, i]
+        #拉普拉斯平滑
         u0 = (s0.sum() + 1) / (n0 + N)
+        #存入字典
         state[i] = [u0, u1]
 
     ###################
@@ -70,14 +75,18 @@ def nb_train(matrix, category):
 def nb_test(matrix, state):
     output = np.zeros(matrix.shape[0])
     ###################
+    #邮件数量
     M = matrix.shape[0]
+    #token的数量
     N = matrix.shape[1]
     for i in range(M):
+        #第i个邮件
         vector = matrix[i]
         s1 = np.log(state[-1][1])
         s0 = np.log(state[-1][0])
         
         for j in range(N):
+            #对第j个token的对数概率做累加
             s1 += vector[j] * np.log(state[j][1])
             s0 += vector[j] * np.log(state[j][0])
         if s1 > s0:
@@ -99,21 +108,6 @@ def nb(file):
     output = nb_test(testMatrix, state)
     
     return evaluate(output, testCategory)
-
-'''
-def main():
-    trainMatrix, tokenlist, trainCategory = readMatrix('MATRIX.TRAIN')
-    testMatrix, tokenlist, testCategory = readMatrix('MATRIX.TEST')
-
-    state = nb_train(trainMatrix, trainCategory)
-    output = nb_test(testMatrix, state)
-
-    evaluate(output, testCategory)
-    return
-
-if __name__ == '__main__':
-    main()
-'''
 
 trainMatrix, tokenlist, trainCategory = readMatrix('MATRIX.TRAIN')
 testMatrix, tokenlist, testCategory = readMatrix('MATRIX.TEST')
@@ -137,7 +131,7 @@ for i in key:
     
 print(word)
 
-
+#problem c
 size = ['.50','.100','.200','.400','.800','.1400']
 size1 = [50, 100, 200, 400, 800, 1400]
 train = "MATRIX.TRAIN"
