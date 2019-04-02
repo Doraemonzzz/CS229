@@ -1,4 +1,4 @@
-#### Problem 1 A Simple Neural Network
+#### 1. A Simple Neural Network
 
 记第二层的输出为$g^{(i)}$
 
@@ -79,7 +79,7 @@ $$
 
 
 
-#### Problem 2 EM for MAP estimation
+#### 2. EM for MAP estimation
 
 对数似然函数为
 $$
@@ -135,7 +135,7 @@ $$
 
 
 
-#### Problem 3 EM application
+#### 3. EM application
 
 (a)
 
@@ -286,7 +286,9 @@ y^{(pr)}, z^{(pr)}|x^{(pr)} \sim \mathcal N(\mu_{1|2}, \Sigma_{1|2})
 $$
 其中
 $$
-\mu_{1|2} = \left[
+\begin{aligned}
+
+\mu_{1|2}& = \left[
  \begin{matrix}
    \mu_p  \\
    \nu_r
@@ -297,8 +299,22 @@ $$
  \tau^2_r
   \end{matrix}
   \right] (\sigma^2_p +\tau^2_r +\sigma^2)^{-1} (x^{(pr)}-   \mu_p -\nu_r)\\
+  &=  \left[
+ \begin{matrix}
+   \mu_p +\frac{\sigma^2_p}{\sigma^2_p +\tau^2_r +\sigma^2}
+    (x^{(pr)}-   \mu_p -\nu_r)\\
+   \nu_r+\frac{ \tau^2_r}{\sigma^2_p +\tau^2_r +\sigma^2}
+    (x^{(pr)}-   \mu_p -\nu_r)
+  \end{matrix}
+  \right]  \\
+  &\triangleq   \left[
+ \begin{matrix}
+  (\mu_{pr})_y \\
+  (\mu_{pr})_z
+  \end{matrix}
+  \right]  \\
   
-  \Sigma_{1|2}= \left[
+  \Sigma_{1|2}&= \left[
  \begin{matrix}
  \sigma^2_p& 0  \\
  0&\tau^2_r 
@@ -314,7 +330,28 @@ $$
 \sigma^2_p &
  \tau^2_r
   \end{matrix}
-  \right]
+  \right]\\
+  &=\frac 1 {\sigma^2_p +\tau^2_r +\sigma^2}
+  \left[
+ \begin{matrix}
+ \sigma^2_p(\sigma^2_p +\tau^2_r +\sigma^2) -\sigma_p^4 & -\sigma_p^2\tau_r^2  \\
+ -\sigma_p^2\tau_r^2&\tau^2_r (\sigma^2_p +\tau^2_r +\sigma^2)-\tau_r^4
+  \end{matrix}
+  \right]\\
+  &=\frac 1 {\sigma^2_p +\tau^2_r +\sigma^2}
+  \left[
+ \begin{matrix}
+ \sigma^2_p(\tau^2_r +\sigma^2)  & -\sigma_p^2\tau_r^2  \\
+ -\sigma_p^2\tau_r^2&\tau^2_r (\sigma^2_p +\sigma^2)
+  \end{matrix}
+  \right]\\
+   &\triangleq   \left[
+ \begin{matrix}
+  ( \Sigma_{pr})_{yy} &( \Sigma_{pr})_{yz}  \\
+( \Sigma_{pr})_{yz} &  ( \Sigma_{pr})_{zz}
+  \end{matrix}
+  \right] 
+  \end{aligned}
 $$
 因此
 $$
@@ -335,72 +372,132 @@ Q_{pr}(y^{(pr)}, z^{(pr)}) =\frac{1}{2\pi |\Sigma_{1|2}|^{\frac 12 }}
 \right] -\mu_{1|2} \Big)
 \Big)
 $$
+为了后续计算，这里再计算如下几个量：
+$$
+\begin{eqnarray*}
+\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}} [ y^{(pr)}] 
+&&=    (\mu_{pr})_y  \tag 1 \\
+\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}} [ z^{(pr)}] 
+&&=    (\mu_{pr})_z \tag 2 \\
+\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}} [ (y^{(pr)})^2] 
+&&=    (\Sigma_{pr})_{yy} + (\mu_{pr})_y^2 \tag 3 \\
+\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}} [ (z^{(pr)})^2] 
+&&=   (\Sigma_{pr})_{zz} +(\mu_{pr})_z^2\tag 4 \\
+\end{eqnarray*}
+$$
 (b)接下来我们需要最大化下式
 $$
 \sum_{p=1}^P \sum_{r=1}^R \int_{(y^{(pr)}, z^{(pr)})} Q_{pr}(y^{(pr)}, z^{(pr)}) \log \frac {p(y^{(pr)},z^{(pr)}, x^{(pr)})}{Q_{pr}(y^{(pr)}, z^{(pr)})} dy^{(pr)}dz^{(pr)}
 $$
+注意到在迭代过程中我们视$Q_{pr}(y^{(pr)}, z^{(pr)})$为常数，因此我们需要最大化
+$$
+\sum_{p=1}^P \sum_{r=1}^R \int_{(y^{(pr)}, z^{(pr)})} Q_{pr}(y^{(pr)}, z^{(pr)}) \log{p(y^{(pr)},z^{(pr)}, x^{(pr)})} dy^{(pr)}dz^{(pr)}
+$$
 上式可以记为
 $$
 \sum_{p=1}^P \sum_{r=1}^R\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}}
-\Big[\log \frac {p(y^{(pr)},z^{(pr)}, x^{(pr)})}{Q_{pr}(y^{(pr)}, z^{(pr)})}\Big]
+\Big[\log  {p(y^{(pr)},z^{(pr)}, x^{(pr)})}\Big]
 $$
-考虑$\frac {p(y^{(pr)},z^{(pr)}, x^{(pr)})}{Q_{pr}(y^{(pr)}, z^{(pr)})}​$，由定义可知
+利用题目中的条件化简可得
 $$
-Q_{pr}(y^{(pr)}, z^{(pr)}) = p(y^{(pr)}, z^{(pr)}| x^{(pr)}) =\frac{p(y^{(pr)},z^{(pr)}, x^{(pr)})}{p( x^{(pr)})}
+\begin{aligned}
+&\sum_{p=1}^P \sum_{r=1}^R\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}}
+\Big[\log  {p(y^{(pr)},z^{(pr)}, x^{(pr)})}\Big]\\
+&=\sum_{p=1}^P \sum_{r=1}^R\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}}
+\Big[\log \Big( {p(x^{(pr)}|y^{(pr)}, z^{(pr)})}  p(y^{(pr)})  p(z^{(pr)})\Big)  \Big]\\
+
+&=\sum_{p=1}^P \sum_{r=1}^R\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}}
+\Big[ \log\Big( \frac 1 {\sqrt{2\pi}\sigma}
+\exp\Big({-\frac 1 {2\sigma^2} (x^{(pr)}-y^{(pr)}- z^{(pr)})^2}\Big) 
+\times \frac 1 {\sqrt{2\pi}\sigma_p}
+\exp\Big({-\frac 1 {2\sigma^2_p} (y^{(pr)}- \mu_p)^2}\Big) \times 
+\frac 1 {\sqrt{2\pi}\tau_r}
+\exp\Big({-\frac 1 {2\tau^2_r} (z^{(pr)}- \nu_r)^2}\Big)
+\Big)  \Big]\\
+
+&=\sum_{p=1}^P \sum_{r=1}^R\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}} 
+\Big[-\frac 32 \log (2\pi) - \frac 1 2\log \sigma^2- 
+\frac 1 2\log \sigma_p^2 - \frac 1 2\log \tau_r^2
+{-\frac 1 {2\sigma^2} (x^{(pr)}-y^{(pr)}- z^{(pr)})^2}
+{-\frac 1 {2\sigma^2_p} (y^{(pr)}- \mu_p)^2}
+{-\frac 1 {2\tau^2_r} (z^{(pr)}- \nu_r)^2} \Big]
+\end{aligned}
+$$
+将和参数无关的项丢弃，我们需要最大化：
+$$
+\begin{aligned}
+&\sum_{p=1}^P \sum_{r=1}^R\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}} 
+\Big[-\frac 12 \log \sigma_p^2 -\frac 12\log \tau_r^2
+{-\frac 1 {2\sigma^2_p} (y^{(pr)}- \mu_p)^2}
+{-\frac 1 {2\tau^2_r} (z^{(pr)}- \nu_r)^2} \Big]\\
+&= \sum_{p=1}^P \sum_{r=1}^R\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}} 
+\Big[-\frac 12\log \sigma_p^2 -\frac 12\log \tau_r^2
+{-\frac 1 {2\sigma^2_p} (y^{(pr)}- \mu_p)^2}
+{-\frac 1 {2\tau^2_r} (z^{(pr)}- \nu_r)^2} \Big]\\
+&= \sum_{p=1}^P \sum_{r=1}^R\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}} 
+\Big[-\frac 12\log \sigma_p^2 -\frac 12\log \tau_r^2
+{-\frac 1 {2\sigma^2_p} \big ((y^{(pr)})^2-2y^{(pr)}\mu_p+  \mu_p^2\big)}
+{-\frac 1 {2\tau^2_r} \big ((z^{(pr)})^2-2z^{(pr)}\nu_r+  \nu_r^2\big)} \Big]
+\end{aligned}
+$$
+代入(1)(2)(3)(4)，得到：
+$$
+\begin{aligned}
+L&=\sum_{p=1}^P \sum_{r=1}^R\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}} 
+\Big[-\frac 12\log \sigma_p^2 -\frac 12\log \tau_r^2
+{-\frac 1 {2\sigma^2_p} \big ((y^{(pr)})^2-2y^{(pr)}\mu_p+  \mu_p^2\big)}
+{-\frac 1 {2\tau^2_r} \big ((z^{(pr)})^2-2z^{(pr)}\nu_r+  \nu_r^2\big)} \Big]\\
+&=\sum_{p=1}^P \sum_{r=1}^R
+\Big[-\frac 12\log \sigma_p^2 -\frac 12\log \tau_r^2
+{-\frac 1 {2\sigma^2_p} \big ( (\Sigma_{pr})_{yy} ^2+ (\mu_{pr})_y^2 -2(\mu_{pr})_y\mu_p+  \mu_p^2\big)}
+{-\frac 1 {2\tau^2_r} \big ( (\Sigma_{pr})_{zz} ^2+ (\mu_{pr})_z^2-2(\mu_{pr})_z\nu_r+  \nu_r^2\big)} \Big]
+\end{aligned}
 $$
 所以
 $$
-\frac {p(y^{(pr)},z^{(pr)}, x^{(pr)})}{Q_{pr}(y^{(pr)}, z^{(pr)})} = p( x^{(pr)})
-$$
-由(a)(i)的讨论可知
-$$
-p( x^{(pr)}) = \frac{1}{\sqrt{2\pi(\sigma^2_p +\tau^2_r +\sigma^2)} } 
-\exp\Big (-\frac{(x^{(pr)}-\mu_p -\nu_r)^2}{2(\sigma^2_p +\tau^2_r +\sigma^2)}  \Big) \\
-\log p( x^{(pr)}) = -\frac 1 2 \log (2\pi)  
--\frac 1 2 \log (\sigma^2_p +\tau^2_r +\sigma^2) -\frac{(x^{(pr)}-\mu_p -\nu_r)^2}{2(\sigma^2_p +\tau^2_r +\sigma^2)}
-$$
-注意到上式和$(y^{(pr)}, z^{(pr)})$无关，因此
-$$
 \begin{aligned}
-\sum_{p=1}^P \sum_{r=1}^R\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}}
-\Big[\log \frac {p(y^{(pr)},z^{(pr)}, x^{(pr)})}{Q_{pr}(y^{(pr)}, z^{(pr)})}\Big]
-&=\sum_{p=1}^P \sum_{r=1}^R\mathbb E_{(y^{(pr)}, z^{(pr)})\sim Q_{pr}}
-\Big[
--\frac 1 2 \log (2\pi)  
--\frac 1 2 \log (\sigma^2_p +\tau^2_r +\sigma^2) -\frac{(x^{(pr)}-\mu_p -\nu_r)^2}{2(\sigma^2_p +\tau^2_r +\sigma^2)}
-\Big] \\
-&= \sum_{p=1}^P \sum_{r=1}^R \Big(-\frac 1 2 \log (2\pi)  
--\frac 1 2 \log (\sigma^2_p +\tau^2_r +\sigma^2) -\frac{(x^{(pr)}-\mu_p -\nu_r)^2}{2(\sigma^2_p +\tau^2_r +\sigma^2)}\Big) \\\
-&\triangleq  l(\sigma,\tau,\mu,\nu)
+\nabla_{\mu_p} L
+&= \sum_{r=1}^R
+\Big[ -\frac 1 {2\sigma^2_p}\big( -2(\mu_{pr})_y+  2\mu_p\big)  \Big]\\
+&= \frac R{\sigma^2_p}\sum_{r=1}^R\Big[(\mu_{pr})_y - \mu_p  \Big]\\
+&=\frac R{\sigma^2_p} \Big(\sum_{r=1}^R (\mu_{pr})_y -  R\mu_p \Big)\\
+
+\nabla_{\nu_r} L
+&= \sum_{p=1}^P
+\Big[ -\frac 1 {2\tau^2_r}\big( -2(\mu_{pr})_z+  2\nu_r\big)  \Big]\\
+&= \frac P{\tau^2_r} \sum_{p=1}^P\Big[(\mu_{pr})_z - \nu_r  \Big]\\
+&= \frac P{\tau^2_r} \Big( \sum_{p=1}^P (\mu_{pr})_z -  P \nu_r \Big)\\
+
+\nabla_{\sigma_p^2} L
+&= \sum_{r=1}^R
+\Big[ -\frac 1 {2\sigma^2_p}+\frac 1 {2(\sigma^2_p)^2} \big ( (\Sigma_{pr})_{yy} ^2+(\mu_{pr})_y^2-2(\mu_{pr})_y\mu_p+  \mu_p^2\big) \Big]\\
+&=  -\frac R {2\sigma^2_p}+\frac 1 {2(\sigma^2_p)^2} \sum_{r=1}^R
+\Big[ (\Sigma_{pr})_{yy} ^2+(\mu_{pr})_y^2-2(\mu_{pr})_y\mu_p+  \mu_p^2\Big]\\
+
+\nabla_{\tau_r^2} L
+&=\sum_{p=1}^P
+\Big[ -\frac 1 {2\tau^2_r}+\frac 1 {2(\tau^2_r)^2} \big ( (\Sigma_{pr})_{zz} ^2
++(\mu_{pr})_z^2-2(\mu_{pr})_z\nu_r+  \nu_r^2\big)  \Big]\\
+&=  -\frac P{2\tau^2_r} +\frac 1 {2(\tau^2_r)^2}\sum_{p=1}^P 
+ \Big [(\Sigma_{pr})_{zz} ^2+(\mu_{pr})_z^2-2(\mu_{pr})_z\nu_r+ \nu_r^2 \Big]
 \end{aligned}
 $$
-分别求梯度可得
+
+令上述梯度为$0​$，求解得到：
 $$
 \begin{aligned}
-\nabla_{\sigma_p^2} l(\sigma,\tau,\mu,\nu)
-&=\sum_{r=1}^R -\frac{1}{2(\sigma^2_p +\tau^2_r +\sigma^2)} + 
-\frac{(x^{(pr)}-\mu_p -\nu_r)^2}{2(\sigma^2_p +\tau^2_r +\sigma^2)^2} \\
-&=\sum_{r=1}^R\frac{(x^{(pr)}-\mu_p -\nu_r)^2 -(\sigma^2_p +\tau^2_r +\sigma^2)}{2(\sigma^2_p +\tau^2_r +\sigma^2)^2} \\
-
-\nabla_{\tau_r^2} l(\sigma,\tau,\mu,\nu)
-&=\sum_{p=1}^P -\frac{1}{2(\sigma^2_p +\tau^2_r +\sigma^2)} + 
-\frac{(x^{(pr)}-\mu_p -\nu_r)^2}{2(\sigma^2_p +\tau^2_r +\sigma^2)^2} \\
-&=\sum_{p=1}^P\frac{(x^{(pr)}-\mu_p -\nu_r)^2 -(\sigma^2_p +\tau^2_r +\sigma^2)}{2(\sigma^2_p +\tau^2_r +\sigma^2)^2} \\
-
-\nabla_{\nu_r} l(\sigma,\tau,\mu,\nu)
-&=\sum_{p=1}^P  
--\frac{\mu_p +\nu_r-2x^{(pr)}}{\sigma^2_p +\tau^2_r +\sigma^2} \\
-
-
-\nabla_{\mu_p} l(\sigma,\tau,\mu,\nu)
-&=\sum_{r=1}^R 
--\frac{\mu_p +\nu_r-2x^{(pr)}}{\sigma^2_p +\tau^2_r +\sigma^2} \\
+\mu_p &= \frac 1 R\sum_{r=1}^R (\mu_{pr})_y  \\
+\nu_r &= \frac 1 P \sum_{p=1}^P (\mu_{pr})_z \\
+\sigma_p^2 &= \frac 1 R \sum_{r=1}^R
+\Big[ (\Sigma_{pr})_{yy} ^2+(\mu_{pr})_y^2-2(\mu_{pr})_y\mu_p+  \mu_p^2\Big]\\
+\tau_r^2 &=\frac 1 P  \sum_{p=1}^P 
+ \Big [(\Sigma_{pr})_{zz} ^2+(\mu_{pr})_z^2-2(\mu_{pr})_z\nu_r+  \nu_r^2 \Big]
 \end{aligned}
 $$
 
 
 
-#### Problem 4 KL divergence and Maximum Likelihood
+#### 4. KL divergence and Maximum Likelihood
 
 (a)我们知道$f(x)=-\log x​$是凸函数，所以
 $$
@@ -457,7 +554,7 @@ $$
 
 
 
-#### Problem 5 K-means for compression
+#### 5. K-means for compression
 
 本题有一个注意点，图片的数据格式为整型，运行聚类前需要将其转换为浮点型，否则会报错。另外，本题使用向量化的方法加快计算速度，介绍如下：
 
