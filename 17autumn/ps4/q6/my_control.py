@@ -138,7 +138,19 @@ state = cart_pole.get_state(state_tuple)
 
 ###### BEGIN YOUR CODE ######
 # TODO:
-raise NotImplementedError('Initializations not implemented')
+#价值函数
+value_function = np.random.uniform(0, 0.1, NUM_STATES)
+#计数
+tran_cnt = np.zeros((NUM_STATES, NUM_STATES, NUM_ACTIONS))
+#概率
+tran_prob = np.ones((NUM_STATES, NUM_STATES, NUM_ACTIONS)) / NUM_STATES
+#记录奖励
+reward_value = np.zeros(NUM_STATES)
+#记录奖励总数
+reward_cnt = np.zeros(NUM_STATES)
+#奖励
+state_reward = np.zeros(NUM_STATES)
+#raise NotImplementedError('Initializations not implemented')
 ###### END YOUR CODE ######
 
 # This is the criterion to end the simulation.
@@ -160,7 +172,15 @@ while consecutive_no_learning_trials < NO_LEARNING_THRESHOLD:
     ###### BEGIN YOUR CODE ######
     # TODO:
     # raise NotImplementedError('Action choice not implemented')
-    # action = 0 if np.random.uniform() < 0.5 else 1
+    #期望收益，比较其大小
+    s0 = np.sum(tran_prob[state, :, 0] * value_function)
+    s1 = np.sum(tran_prob[state, :, 1] * value_function)
+    if s0 > s1:
+        action = 0
+    elif s0 < s1:
+        action = 1
+    else:
+        action = np.random.randint(0, 2)
     ###### END YOUR CODE ######
 
     # Get the next state by simulating the dynamics
@@ -191,7 +211,10 @@ while consecutive_no_learning_trials < NO_LEARNING_THRESHOLD:
 
     ###### BEGIN YOUR CODE ######
     # TODO:
-    raise NotImplementedError('Update T and R not implemented')
+    #raise NotImplementedError('Update T and R not implemented')
+    tran_cnt[state, new_state, action] += 1
+    reward_value[new_state] += R
+    reward_cnt[new_state] += 1
     # record the number of times `state, action, new_state` occurs
     # record the rewards for every `new_state`
     # record the number of time `new_state` was reached
@@ -210,7 +233,15 @@ while consecutive_no_learning_trials < NO_LEARNING_THRESHOLD:
 
         ###### BEGIN YOUR CODE ######
         # TODO:
-        raise NotImplementedError('MDP  T and R update not implemented')
+        #统计在某个状态采取某个动作的次数
+        for i in range(NUM_ACTIONS):
+            for j in range(NUM_STATES):
+                #在状态j采取行动i的总数
+                num = np.sum(tran_cnt[j, :, i])
+                if num > 0:
+                     tran_prob[j, :, i] = tran_cnt[j, :, i] / num
+        #更新奖励
+        state_reward[reward_cnt>0] = reward_value[reward_cnt>0] / reward_cnt[reward_cnt>0]
         ###### END YOUR CODE ######
 
         # Perform value iteration using the new estimated model for the MDP.
@@ -221,7 +252,31 @@ while consecutive_no_learning_trials < NO_LEARNING_THRESHOLD:
 
         ###### BEGIN YOUR CODE ######
         # TODO:
-        raise NotImplementedError('Value iteration choice not implemented')
+        iterations = 0
+        while True:
+            #值迭代更新后的值
+            v0 = GAMMA * tran_prob[:, :, 0].dot(value_function) + state_reward
+            v1 = GAMMA * tran_prob[:, :, 1].dot(value_function) + state_reward
+            v = np.c_[v0, v1]
+            #取最大值
+            value_function_new = np.max(v, axis=1)
+            #计算更新幅度
+            delta = np.linalg.norm(value_function_new - value_function)
+            #更新价值函数
+            value_function = np.copy(value_function_new)
+            iterations += 1
+            #更新幅度变小，则停止循环
+            if delta < TOLERANCE:
+                break
+        
+        #更新一次收敛的计数
+        if iterations == 1:
+            consecutive_no_learning_trials += 1
+        else:
+            consecutive_no_learning_trials = 0
+            
+        #print(consecutive_no_learning_trials)
+        #raise NotImplementedError('Value iteration choice not implemented')
         ###### END YOUR CODE ######
 
     # Do NOT change this code: Controls the simulation, and handles the case
